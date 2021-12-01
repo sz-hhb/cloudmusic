@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duo.mapper.SingerMapper">
+    <resultMap id="BaseResultMap" type="com.duo.entity.Singer">
+        <id column="singerId" jdbcType="INTEGER" property="singerid"/>
+        <result column="singerName" jdbcType="VARCHAR" property="singername"/>
+        <result column="singerPhotoURL" jdbcType="VARCHAR" property="singerphotourl"/>
+        <result column="singerHot" jdbcType="INTEGER" property="singerhot"/>
+        <result column="typeId" jdbcType="INTEGER" property="typeid"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    singerId, singerName, singerPhotoURL, singerHot, typeId, address
+  </sql>
+    <select id="selectByName" resultMap="BaseResultMap" parameterType="com.duo.entity.Singer">
+        select
+        <include refid="Base_Column_List"/>
+        from singer where singerName = #{singername,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByType" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from singer where typeId = #{typeid,jdbcType=INTEGER}
+    </select>
+    <select id="findSingerOrderByHot" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from singer order by singerHot desc
+    </select>
+    <select id="getSingerList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from singer
+    </select>
+    <select id="selectBySingerName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from singer
+        where singerName = #{singerName,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from singer
+        where singerId = #{singerid,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from singer
+    where singerId = #{singerid,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.duo.entity.Singer">
+    insert into singer (singerId, singerName, singerPhotoURL, 
+      singerHot, typeId, address
+      )
+    values (#{singerid,jdbcType=INTEGER}, #{singername,jdbcType=VARCHAR}, #{singerphotourl,jdbcType=VARCHAR}, 
+      #{singerhot,jdbcType=INTEGER}, #{typeid,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.duo.entity.Singer">
+        insert into singer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="singerid != null">
+                singerId,
+            </if>
+            <if test="singername != null">
+                singerName,
+            </if>
+            <if test="singerphotourl != null">
+                singerPhotoURL,
+            </if>
+            <if test="singerhot != null">
+                singerHot,
+            </if>
+            <if test="typeid != null">
+                typeId,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="singerid != null">
+                #{singerid,jdbcType=INTEGER},
+            </if>
+            <if test="singername != null">
+                #{singername,jdbcType=VARCHAR},
+            </if>
+            <if test="singerphotourl != null">
+                #{singerphotourl,jdbcType=VARCHAR},
+            </if>
+            <if test="singerhot != null">
+                #{singerhot,jdbcType=INTEGER},
+            </if>
+            <if test="typeid != null">
+                #{typeid,jdbcType=INTEGER},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.duo.entity.Singer">
+        update singer
+        <set>
+            <if test="singername != null">
+                singerName = #{singername,jdbcType=VARCHAR},
+            </if>
+            <if test="singerphotourl != null">
+                singerPhotoURL = #{singerphotourl,jdbcType=VARCHAR},
+            </if>
+            <if test="singerhot != null">
+                singerHot = #{singerhot,jdbcType=INTEGER},
+            </if>
+            <if test="typeid != null">
+                typeId = #{typeid,jdbcType=INTEGER},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where singerId = #{singerid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.duo.entity.Singer">
+    update singer
+    set singerName = #{singername,jdbcType=VARCHAR},
+      singerPhotoURL = #{singerphotourl,jdbcType=VARCHAR},
+      singerHot = #{singerhot,jdbcType=INTEGER},
+      typeId = #{typeid,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR}
+    where singerId = #{singerid,jdbcType=INTEGER}
+  </update>
+</mapper>

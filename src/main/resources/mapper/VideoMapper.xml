@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duo.mapper.VideoMapper">
+    <resultMap id="BaseResultMap" type="com.duo.entity.Video">
+        <id column="videoId" jdbcType="INTEGER" property="videoid"/>
+        <result column="videoName" jdbcType="VARCHAR" property="videoname"/>
+        <result column="videoAuthor" jdbcType="VARCHAR" property="videoauthor"/>
+        <result column="videoPhoto" jdbcType="VARCHAR" property="videophoto"/>
+        <result column="videoURL" jdbcType="VARCHAR" property="videourl"/>
+        <result column="videoTime" jdbcType="TIMESTAMP" property="videotime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    videoId, videoName, videoAuthor, videoPhoto, videoURL, videoTime
+  </sql>
+    <select id="selectByName" parameterType="com.duo.entity.Video" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from video
+        where videoName = #{videoname,jdbcType=VARCHAR}
+    </select>
+    <select id="getVideoList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from video
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from video
+        where videoId = #{videoid,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from video
+    where videoId = #{videoid,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.duo.entity.Video">
+    insert into video (videoId, videoName, videoAuthor, 
+      videoPhoto, videoURL, videoTime
+      )
+    values (#{videoid,jdbcType=INTEGER}, #{videoname,jdbcType=VARCHAR}, #{videoauthor,jdbcType=VARCHAR}, 
+      #{videophoto,jdbcType=VARCHAR}, #{videourl,jdbcType=VARCHAR}, #{videotime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.duo.entity.Video">
+        insert into video
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="videoid != null">
+                videoId,
+            </if>
+            <if test="videoname != null">
+                videoName,
+            </if>
+            <if test="videoauthor != null">
+                videoAuthor,
+            </if>
+            <if test="videophoto != null">
+                videoPhoto,
+            </if>
+            <if test="videourl != null">
+                videoURL,
+            </if>
+            <if test="videotime != null">
+                videoTime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="videoid != null">
+                #{videoid,jdbcType=INTEGER},
+            </if>
+            <if test="videoname != null">
+                #{videoname,jdbcType=VARCHAR},
+            </if>
+            <if test="videoauthor != null">
+                #{videoauthor,jdbcType=VARCHAR},
+            </if>
+            <if test="videophoto != null">
+                #{videophoto,jdbcType=VARCHAR},
+            </if>
+            <if test="videourl != null">
+                #{videourl,jdbcType=VARCHAR},
+            </if>
+            <if test="videotime != null">
+                #{videotime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.duo.entity.Video">
+        update video
+        <set>
+            <if test="videoname != null">
+                videoName = #{videoname,jdbcType=VARCHAR},
+            </if>
+            <if test="videoauthor != null">
+                videoAuthor = #{videoauthor,jdbcType=VARCHAR},
+            </if>
+            <if test="videophoto != null">
+                videoPhoto = #{videophoto,jdbcType=VARCHAR},
+            </if>
+            <if test="videourl != null">
+                videoURL = #{videourl,jdbcType=VARCHAR},
+            </if>
+            <if test="videotime != null">
+                videoTime = #{videotime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where videoId = #{videoid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.duo.entity.Video">
+    update video
+    set videoName = #{videoname,jdbcType=VARCHAR},
+      videoAuthor = #{videoauthor,jdbcType=VARCHAR},
+      videoPhoto = #{videophoto,jdbcType=VARCHAR},
+      videoURL = #{videourl,jdbcType=VARCHAR},
+      videoTime = #{videotime,jdbcType=TIMESTAMP}
+    where videoId = #{videoid,jdbcType=INTEGER}
+  </update>
+</mapper>

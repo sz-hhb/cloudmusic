@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duo.mapper.SingertypeMapper">
+    <resultMap id="BaseResultMap" type="com.duo.entity.Singertype">
+        <id column="typeId" jdbcType="INTEGER" property="typeid"/>
+        <result column="typeName" jdbcType="VARCHAR" property="typename"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    typeId, typeName
+  </sql>
+    <select id="selectBySingerTypeName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from singertype
+        where typeName = #{typename,jdbcType=VARCHAR}
+    </select>
+    <select id="getSingerTypeList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from singertype
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from singertype
+        where typeId = #{typeid,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from singertype
+    where typeId = #{typeid,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.duo.entity.Singertype">
+    insert into singertype (typeId, typeName
+      )
+    values (#{typeid,jdbcType=INTEGER}, #{typename,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.duo.entity.Singertype">
+        insert into singertype
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="typeid != null">
+                typeId,
+            </if>
+            <if test="typename != null">
+                typeName
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="typeid != null">
+                #{typeid,jdbcType=INTEGER},
+            </if>
+            <if test="typename != null">
+                #{typename,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.duo.entity.Singertype">
+        update singertype
+        <set>
+            <if test="typename != null">
+                typeName = #{typename,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where typeId = #{typeid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.duo.entity.Singertype">
+    update singertype
+    set typeName = #{typename,jdbcType=VARCHAR}
+    where typeId = #{typeid,jdbcType=INTEGER}
+  </update>
+</mapper>

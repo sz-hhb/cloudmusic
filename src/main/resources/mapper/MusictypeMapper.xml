@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duo.mapper.MusictypeMapper">
+  <resultMap id="BaseResultMap" type="com.duo.entity.Musictype">
+    <id column="musicTypeId" jdbcType="INTEGER" property="musictypeid" />
+    <result column="musicTypeName" jdbcType="VARCHAR" property="musictypename" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    musicTypeId, musicTypeName
+  </sql>
+  <select id="selectByMusicTypeName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from musictype
+    where musicTypeName = #{musictypename,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllMusicType"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from musictype
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from musictype
+    where musicTypeId = #{musictypeid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from musictype
+    where musicTypeId = #{musictypeid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.duo.entity.Musictype">
+    insert into musictype (musicTypeId, musicTypeName)
+    values (#{musictypeid,jdbcType=INTEGER}, #{musictypename,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.duo.entity.Musictype">
+    insert into musictype
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="musictypeid != null">
+        musicTypeId,
+      </if>
+      <if test="musictypename != null">
+        musicTypeName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="musictypeid != null">
+        #{musictypeid,jdbcType=INTEGER},
+      </if>
+      <if test="musictypename != null">
+        #{musictypename,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.duo.entity.Musictype">
+    update musictype
+    <set>
+      <if test="musictypename != null">
+        musicTypeName = #{musictypename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where musicTypeId = #{musictypeid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.duo.entity.Musictype">
+    update musictype
+    set musicTypeName = #{musictypename,jdbcType=VARCHAR}
+    where musicTypeId = #{musictypeid,jdbcType=INTEGER}
+  </update>
+
+</mapper>

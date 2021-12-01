@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duo.mapper.MusicMapper">
+    <resultMap id="BaseResultMap" type="com.duo.entity.Music">
+        <id column="musicId" jdbcType="INTEGER" property="musicid"/>
+        <result column="musicName" jdbcType="VARCHAR" property="musicname"/>
+        <result column="musicPhotoURL" jdbcType="VARCHAR" property="musicphotourl"/>
+        <result column="singerId" jdbcType="INTEGER" property="singerid"/>
+        <result column="musicHot" jdbcType="INTEGER" property="musichot"/>
+        <result column="lyricURL" jdbcType="VARCHAR" property="lyricurl"/>
+        <result column="musicTypeId" jdbcType="INTEGER" property="musictypeid"/>
+        <result column="songURL" jdbcType="VARCHAR" property="songurl"/>
+        <result column="time" jdbcType="TIMESTAMP" property="time"/>
+        <result column="musicTime" jdbcType="VARCHAR" property="musictime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    musicId, musicName, musicPhotoURL, singerId, musicHot, lyricURL, musicTypeId, songURL, 
+    time, musicTime
+  </sql>
+    <select id="selectByName" resultMap="BaseResultMap" parameterType="com.duo.entity.Music">
+        select
+        <include refid="Base_Column_List"/>
+        from music where musicName = #{musicname,jdbcType=VARCHAR}
+    </select>
+    <select id="selectBySinger" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from music where singerId = #{singerid,jdbcType=INTEGER}
+    </select>
+    <select id="selectByHot" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from music order by musicHot desc
+    </select>
+    <select id="selectByTypeid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from music
+        where musicTypeId = #{musictypeid,jdbcType=INTEGER}
+    </select>
+    <select id="selectAllMusic" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from music
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from music
+        where musicId = #{musicid,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from music
+    where musicId = #{musicid,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.duo.entity.Music">
+    insert into music (musicId, musicName, musicPhotoURL, 
+      singerId, musicHot, lyricURL, 
+      musicTypeId, songURL, time, 
+      musicTime)
+    values (#{musicid,jdbcType=INTEGER}, #{musicname,jdbcType=VARCHAR}, #{musicphotourl,jdbcType=VARCHAR}, 
+      #{singerid,jdbcType=INTEGER}, #{musichot,jdbcType=INTEGER}, #{lyricurl,jdbcType=VARCHAR}, 
+      #{musictypeid,jdbcType=INTEGER}, #{songurl,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, 
+      #{musictime,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.duo.entity.Music">
+        insert into music
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="musicid != null">
+                musicId,
+            </if>
+            <if test="musicname != null">
+                musicName,
+            </if>
+            <if test="musicphotourl != null">
+                musicPhotoURL,
+            </if>
+            <if test="singerid != null">
+                singerId,
+            </if>
+            <if test="musichot != null">
+                musicHot,
+            </if>
+            <if test="lyricurl != null">
+                lyricURL,
+            </if>
+            <if test="musictypeid != null">
+                musicTypeId,
+            </if>
+            <if test="songurl != null">
+                songURL,
+            </if>
+            <if test="time != null">
+                time,
+            </if>
+            <if test="musictime != null">
+                musicTime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="musicid != null">
+                #{musicid,jdbcType=INTEGER},
+            </if>
+            <if test="musicname != null">
+                #{musicname,jdbcType=VARCHAR},
+            </if>
+            <if test="musicphotourl != null">
+                #{musicphotourl,jdbcType=VARCHAR},
+            </if>
+            <if test="singerid != null">
+                #{singerid,jdbcType=INTEGER},
+            </if>
+            <if test="musichot != null">
+                #{musichot,jdbcType=INTEGER},
+            </if>
+            <if test="lyricurl != null">
+                #{lyricurl,jdbcType=VARCHAR},
+            </if>
+            <if test="musictypeid != null">
+                #{musictypeid,jdbcType=INTEGER},
+            </if>
+            <if test="songurl != null">
+                #{songurl,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="musictime != null">
+                #{musictime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.duo.entity.Music">
+        update music
+        <set>
+            <if test="musicname != null">
+                musicName = #{musicname,jdbcType=VARCHAR},
+            </if>
+            <if test="musicphotourl != null">
+                musicPhotoURL = #{musicphotourl,jdbcType=VARCHAR},
+            </if>
+            <if test="singerid != null">
+                singerId = #{singerid,jdbcType=INTEGER},
+            </if>
+            <if test="musichot != null">
+                musicHot = #{musichot,jdbcType=INTEGER},
+            </if>
+            <if test="lyricurl != null">
+                lyricURL = #{lyricurl,jdbcType=VARCHAR},
+            </if>
+            <if test="musictypeid != null">
+                musicTypeId = #{musictypeid,jdbcType=INTEGER},
+            </if>
+            <if test="songurl != null">
+                songURL = #{songurl,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                time = #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="musictime != null">
+                musicTime = #{musictime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where musicId = #{musicid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.duo.entity.Music">
+    update music
+    set musicName = #{musicname,jdbcType=VARCHAR},
+      musicPhotoURL = #{musicphotourl,jdbcType=VARCHAR},
+      singerId = #{singerid,jdbcType=INTEGER},
+      musicHot = #{musichot,jdbcType=INTEGER},
+      lyricURL = #{lyricurl,jdbcType=VARCHAR},
+      musicTypeId = #{musictypeid,jdbcType=INTEGER},
+      songURL = #{songurl,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP},
+      musicTime = #{musictime,jdbcType=VARCHAR}
+    where musicId = #{musicid,jdbcType=INTEGER}
+  </update>
+</mapper>
